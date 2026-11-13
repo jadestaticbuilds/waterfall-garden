@@ -109,7 +109,7 @@ function startSignal(){
   var roots=[110,164.81,220];
   roots.forEach(function(f,i){
     var o=AC.createOscillator();o.type='sine';o.frequency.value=f;
-    var og=AC.createGain();og.gain.value=0.42/(i+1);o.connect(og);og.connect(sigBus);
+    var og=AC.createGain();og.gain.value=0.33/(i+1);o.connect(og);og.connect(sigBus);
     var lfo=AC.createOscillator();lfo.frequency.value=0.05+0.04*i;
     var lg=AC.createGain();lg.gain.value=f*0.16;lfo.connect(lg);lg.connect(o.frequency);
     o.start();lfo.start();
@@ -118,7 +118,7 @@ function startSignal(){
   for(var i=0;i<len;i++)d[i]=Math.random()*2-1;
   var ns=AC.createBufferSource();ns.buffer=nb;ns.loop=true;
   var bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=620;bp.Q.value=6;
-  var ng=AC.createGain();ng.gain.value=0.18;
+  var ng=AC.createGain();ng.gain.value=0.14;
   var blfo=AC.createOscillator();blfo.frequency.value=0.07;
   var blg=AC.createGain();blg.gain.value=380;blfo.connect(blg);blg.connect(bp.frequency);
   ns.connect(bp);bp.connect(ng);ng.connect(sigBus);ns.start();blfo.start();
@@ -191,7 +191,7 @@ function pushRow(now){
     if(have){
       var f=50*Math.pow(200,x/Math.max(1,W-1)); // 50 Hz .. 10 kHz, log scale
       var b=Math.max(0,Math.min(freqData.length-1,Math.round(f/binHz)));
-      v=Math.min(1,Math.pow(freqData[b]/255,0.55)*1.3);
+      v=Math.min(1,Math.pow(freqData[b]/255,0.62)*1.25);
     }else{
       // gentle synthetic shimmer until audio wakes
       v=0.16+0.13*Math.sin(x*0.045+now*0.0009)+0.10*Math.sin(x*0.013-now*0.0006)+0.06*Math.sin(x*0.11+now*0.002);
